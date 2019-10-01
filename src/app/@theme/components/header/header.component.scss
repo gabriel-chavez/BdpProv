@@ -59,6 +59,9 @@
             }
         }
     }
+    .cdk-overlay-pane {
+        width: 50%!important;
+    }
     .vertical-center {
         display: flex;
         align-items: center;
@@ -77,6 +80,5 @@
             display: none;
         }
     }
-}
-
-;
+    
+};

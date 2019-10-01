@@ -12,7 +12,7 @@ import { VariosModule } from './varios/varios.module';
     ModulosRoutingModule,
     ThemeModule,
     NbMenuModule,
-    VariosModule
+    VariosModule,
   ],
   declarations: [
     ModulosComponent
