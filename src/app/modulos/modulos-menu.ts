@@ -10,8 +10,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'people-outline',
     children: [
       {
-        title: 'Nuevo Proveedor',
-        link: '/modulos/proveedores/nuevo',
+        title: 'Gestion de proveedores',
+        link: '/modulos/proveedores/gestion',
       },
       {
         title: 'Lista de Proveedores',

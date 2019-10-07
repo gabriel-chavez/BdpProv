@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ProveedoresRoutingModule } from './proveedores-routing.module';
-import { NuevoComponent } from './nuevo/nuevo.component';
 import { ListaComponent } from './lista/lista.component';
 import { ProveedoresComponent } from './proveedores.component';
 import { NebularModule } from '../../nebular.module';
+import { GestionComponent } from './gestion/gestion.component';
 
 
 @NgModule({
@@ -12,6 +12,6 @@ import { NebularModule } from '../../nebular.module';
   ProveedoresRoutingModule,
     NebularModule
   ],
-  declarations: [ProveedoresComponent,NuevoComponent, ListaComponent]
+  declarations: [ProveedoresComponent,GestionComponent, ListaComponent, ]
 })
 export class ProveedoresModule { }

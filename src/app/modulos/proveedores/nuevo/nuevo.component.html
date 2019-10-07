@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-header>Nuevo proveedor</nb-card-header>
       <nb-card-body>
-       
+
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group">
@@ -28,7 +28,9 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label class="label">Tipo de documento</label>
-              <input type="text" nbInput fullWidth placeholder="Tipo de documento">
+              <nb-select fullWidth placeholder="Tipo de documento">
+                <nb-option *ngFor="let par of TParTipoDocumento" [value]="par.Id">{{par.Descripcion}}</nb-option>
+              </nb-select>
             </div>
           </div>
         </div>
@@ -48,7 +50,9 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label class="label">Tipo de persona</label>
-              <input type="text" nbInput fullWidth placeholder="Tipo de persona">
+              <nb-select fullWidth placeholder="Tipo de persona">
+                <nb-option *ngFor="let par of TParTipoPersona" [value]="par.Id">{{par.Descripcion}}</nb-option>
+              </nb-select>
             </div>
           </div>
         </div>
@@ -84,7 +88,9 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label class="label">Tipo de servicio</label>
-              <input type="text" nbInput fullWidth placeholder="Tipo de servicio">
+              <nb-select fullWidth placeholder="Tipo de servicio">
+                <nb-option *ngFor="let par of TParTipoServicio" [value]="par.Id">{{par.Descripcion}}</nb-option>
+              </nb-select>
             </div>
           </div>
           <div class="col-sm-6">
@@ -116,7 +122,9 @@
     <nb-card>
       <nb-card-header>Proveedores agregados</nb-card-header>
       <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table>
       </nb-card-body>
     </nb-card>
   </div>
-  </div>
+</div>
