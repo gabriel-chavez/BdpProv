@@ -4,14 +4,22 @@ import { ListaComponent } from './lista/lista.component';
 import { ProveedoresComponent } from './proveedores.component';
 import { NebularModule } from '../../nebular.module';
 import { GestionComponent } from './gestion/gestion.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VariosModule } from '../varios/varios.module';
+
+
+
 
 
 @NgModule({
 
-  imports: [   
-  ProveedoresRoutingModule,
-    NebularModule
+  imports: [
+    ProveedoresRoutingModule,
+    NebularModule,
+    FormsModule,
+    ReactiveFormsModule,
+    VariosModule
   ],
-  declarations: [ProveedoresComponent,GestionComponent, ListaComponent, ]
+  declarations: [ProveedoresComponent, GestionComponent, ListaComponent]
 })
 export class ProveedoresModule { }

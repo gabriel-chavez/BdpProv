@@ -4,6 +4,7 @@ import { NoEncontradoComponent } from './no-encontrado/no-encontrado.component';
 import { VariosComponent } from './varios.component';
 
 import { NebularModule } from '../../nebular.module';
+import { FrmValidacionComponent } from './frm-validacion/frm-validacion.component';
 
 
 
@@ -12,9 +13,10 @@ import { NebularModule } from '../../nebular.module';
         VariosRoutingModule,        
         NebularModule                    
     ],
+    exports:[FrmValidacionComponent],
     declarations: [
         VariosComponent, 
-        NoEncontradoComponent
+        NoEncontradoComponent, FrmValidacionComponent
     ]
 })
 export class VariosModule { }

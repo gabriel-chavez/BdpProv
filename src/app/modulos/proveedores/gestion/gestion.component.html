@@ -7,16 +7,14 @@
                     <div class="col-md-12 text-right">
                         <button nbButton status="primary" outline class="mb-2"
                             (click)="abrirModal(dialog,'Nuevo proveedor')">
-                            Nuevo proveedor                            
+                            Nuevo proveedor
                         </button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <ng2-smart-table [settings]="settings" [source]="source"
-                            (delete)="onDeleteConfirm($event)"
-                            (edit)="onEditarRegistro($event)"
-                            >
+                        <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteConfirm($event)"
+                            (edit)="onEditarRegistro($event)">
                         </ng2-smart-table>
                     </div>
                 </div>
@@ -26,122 +24,155 @@
 </div>
 
 <ng-template #dialog let-data let-ref="dialogRef">
-    <nb-card style="max-width: 100vw;max-height:100vh;">
-        <nb-card-header>{{tituloModal}}</nb-card-header>
-        <nb-card-body>
+    <form [formGroup]="frmProveedor" (ngSubmit)="guardarCambiosProveedor()">
+        <nb-card style="max-width: 100vw;max-height:100vh;">
+            <nb-card-header>{{tituloModal}}</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Nombre</label>
+                            <input type="text" formControlName="Nombre" nbInput fullWidth placeholder="Nombre">                            
+                            <ngx-frm-validacion mensaje="El campo nombre es requerido" campo="Nombre" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Razón social</label>
+                            <input type="text" formControlName="RazonSocial" nbInput fullWidth
+                                placeholder="Razon social">                           
+                            <ngx-frm-validacion mensaje="El campo razón social es requerido" campo="RazonSocial" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Nit/Ci</label>
+                            <input type="text" formControlName="NitCi" nbInput fullWidth placeholder="Nit/Ci">                            
+                            <ngx-frm-validacion mensaje="El campo Nit/Ci es requerido" campo="NitCi" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        {{TParTipoDocumento | json}}
+                        <div class="form-group">
+                            <label class="label">Tipo de documento</label>
+                            <nb-select formControlName="TParTipoDocumentoFk" fullWidth placeholder="Tipo de documento">
+                                <nb-option *ngFor="let par of tParTipoDocumento" [value]="par.id">{{par.descripcion}}
+                                </nb-option>
+                            </nb-select>                           
+                            <ngx-frm-validacion mensaje="El campo Tipo de documento es requerido" campo="TParTipoDocumentoFk" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="label">Correo electronico</label>
+                            <input formControlName="CorreoElectronico" type="text" nbInput fullWidth
+                                placeholder="Correo electronico">
+                            <small
+                                *ngIf="frmProveedor.get('CorreoElectronico').hasError('email') && frmProveedor.get('CorreoElectronico').touched"
+                                class="text-danger">
+                                El campo Correo electronico no es válido
+                            </small>                            
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="label">Casilla</label>
+                            <input formControlName="Casilla" type="text" nbInput fullWidth placeholder="Casilla">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Tipo de persona</label>
+                            <nb-select formControlName="TParTipoPersonaFk" fullWidth placeholder="Tipo de persona">
+                                <nb-option *ngFor="let par of tParTipoPersona" [value]="par.id">{{par.descripcion}}
+                                </nb-option>
+                            </nb-select>                           
+                            <ngx-frm-validacion mensaje="El campo Tipo de persona es requerido" campo="TParTipoPersonaFk" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Dirección</label>
+                            <input formControlName="Direccion" type="text" nbInput fullWidth placeholder="Dirección">                            
+                            <ngx-frm-validacion mensaje="El campo Dirección es requerido" campo="Direccion" [form]="frmProveedor"></ngx-frm-validacion>
+                            <small 
+                                *ngIf="frmProveedor.get('Direccion').hasError('minlength')" 
+                                class="text-danger">
+                                debe tener minimo
+                                {{
+                                    frmProveedor.get("Direccion").errors.minlength.requiredLength
+                                }}
+                                caracteres
+                            </small>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Nombre</label>
-                        <input type="text" nbInput fullWidth placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="label">Teléfono 1</label>
+                            <input formControlName="Telefono1" type="text" nbInput fullWidth placeholder="Teléfono 1">                            
+                            <ngx-frm-validacion mensaje="El campo Teléfono 1 es requerido" campo="Telefono1" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="label">Teléfono 2</label>
+                            <input formControlName="Telefono2" type="text" nbInput fullWidth placeholder="Teléfono 2">
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Razon social</label>
-                        <input type="text" nbInput fullWidth placeholder="Razon social">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Lugar</label>
+                            <input formControlName="Lugar" type="text" nbInput fullWidth placeholder="Lugar">                           
+                            <ngx-frm-validacion mensaje="El campo Lugar es requerido" campo="Lugar" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
                     </div>
                 </div>
-            </div>            
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Nit/Ci</label>
-                        <input type="text" nbInput fullWidth placeholder="Nit/Ci">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Tipo de servicio</label>
+                            <nb-select formControlName="TParTipoServicioFk" fullWidth placeholder="Tipo de servicio">
+                                <nb-option *ngFor="let par of tParTipoServicio" [value]="par.id">{{par.descripcion}}
+                                </nb-option>
+                            </nb-select>                           
+                            <ngx-frm-validacion mensaje="El campo Tipo de servicio es requerido" campo="TParTipoServicioFk" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="label">Relación</label>
+                            <input formControlName="Relacion" type="text" nbInput fullWidth placeholder="Relación">                            
+                            <ngx-frm-validacion mensaje="El campo Relación es requerido" campo="Relacion" [form]="frmProveedor"></ngx-frm-validacion>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    {{TParTipoDocumento | json}}
-                    <div class="form-group">
-                        <label class="label">Tipo de documento</label>
-                        <nb-select fullWidth placeholder="Tipo de documento">
-                            <nb-option *ngFor="let par of tParTipoDocumento" [value]="par.Id">{{par.Descripcion}}
-                            </nb-option>
-                        </nb-select>
+                {{ frmProveedor.valid }}
+                <br>
+                {{frmProveedor.status}}
+
+            
+            </nb-card-body>
+            <nb-card-footer>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button nbButton status="primary" outline (click)="cerrarModal(ref)" class="margen-button">
+                            Cancelar
+                        </button>
+                        <button nbButton status="success" outline class="margen-button" type="submit">
+                            {{tituloModal}}
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label class="label">Correo electronico</label>
-                        <input type="text" nbInput fullWidth placeholder="Correo electronico">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label class="label">Casilla</label>
-                        <input type="text" nbInput fullWidth placeholder="Casilla">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Tipo de persona</label>
-                        <nb-select fullWidth placeholder="Tipo de persona">
-                            <nb-option *ngFor="let par of tParTipoPersona" [value]="par.Id">{{par.Descripcion}}
-                            </nb-option>
-                        </nb-select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Dirección</label>
-                        <input type="text" nbInput fullWidth placeholder="Dirección">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label class="label">Teléfono 1</label>
-                        <input type="text" nbInput fullWidth placeholder="Teléfono 1">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label class="label">Teléfono 2</label>
-                        <input type="text" nbInput fullWidth placeholder="Teléfono 2">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Lugar</label>
-                        <input type="text" nbInput fullWidth placeholder="Lugar">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Tipo de servicio</label>
-                        <nb-select fullWidth placeholder="Tipo de servicio">
-                            <nb-option *ngFor="let par of tParTipoServicio" [value]="par.Id">{{par.Descripcion}}
-                            </nb-option>
-                        </nb-select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Relación</label>
-                        <input type="text" nbInput fullWidth placeholder="Relación">
-                    </div>
-                </div>
-            </div>
-        </nb-card-body>
-        <nb-card-footer>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <button nbButton status="primary" outline (click)="ref.close()" class="margen-button">
-                        Cancelar
-                    </button>
-                    <button nbButton status="success" outline class="margen-button" (click)="guardarCambiosProveedor()">
-                        {{tituloModal}}
-                    </button>
-                </div>
-            </div>
-        </nb-card-footer>
-    </nb-card>
+            </nb-card-footer>
+        </nb-card>
+    </form>
 </ng-template>

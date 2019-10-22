@@ -1,4 +1,4 @@
 export class Parametrica {
-    Id:number;
-    Descripcion:string;
+    id:number;
+    descripcion:string;
 }
