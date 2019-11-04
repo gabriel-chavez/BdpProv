@@ -3,17 +3,20 @@ export class Proveedor {
     RazonSocial:string;
     NitCi:string;
     TParTipoDocumentoFk:number;
-    TipoDocumentoDescripcion:string;
-    CorreoElectronico:string;
+    tparTipoDocumentoDescripcion:string;
+    Email:string;
     Casilla:number;
     TParTipoPersonaFk:number;
-    TipoPersonaDescripcion:string;
+    tparTipoPersonaDescripcion:string;
     Direccion:string;
     Telefono1:string;
     Telefono2:string;
     Lugar:string;
     TParTipoServicioFk:number;
-    TipoServicioDescripcion:string;
+    tparTipoServicioDescripcion:string;
     Relacion:string;
-
+    public constructor(init?: Partial<Proveedor>) {
+       // let _proveedor:Proveedor=JSON.parse(JSON.stringify(init));
+        Object.assign(this, init);
+    }
 }

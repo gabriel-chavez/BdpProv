@@ -11,6 +11,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
+  NbContextMenuModule,
 } from '@nebular/theme';
 import { ThemeModule } from './@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -25,7 +26,8 @@ const NEBULAR_COMPONENTS = [
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
-  Ng2SmartTableModule
+  Ng2SmartTableModule,
+  NbContextMenuModule
 ]
 @NgModule({
   imports: [    

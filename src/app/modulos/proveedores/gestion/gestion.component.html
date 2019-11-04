@@ -13,9 +13,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteConfirm($event)"
+                        <!-- <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteConfirm($event)"
                             (edit)="onEditarRegistro($event)">
-                        </ng2-smart-table>
+                        </ng2-smart-table> -->
+                        <ngx-custom-table [columnas]="columnas" [source]="source"></ngx-custom-table>
                     </div>
                 </div>
             </nb-card-body>
@@ -32,14 +33,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Nombre</label>
-                            <input type="text" formControlName="Nombre" nbInput fullWidth placeholder="Nombre">                            
+                            <input fieldSize="small" type="text" formControlName="Nombre" nbInput fullWidth placeholder="Nombre">                            
                             <ngx-frm-validacion mensaje="El campo nombre es requerido" campo="Nombre" [form]="frmProveedor"></ngx-frm-validacion>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Razón social</label>
-                            <input type="text" formControlName="RazonSocial" nbInput fullWidth
+                            <input fieldSize="small" type="text" formControlName="RazonSocial" nbInput fullWidth
                                 placeholder="Razon social">                           
                             <ngx-frm-validacion mensaje="El campo razón social es requerido" campo="RazonSocial" [form]="frmProveedor"></ngx-frm-validacion>
                         </div>
@@ -49,7 +50,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Nit/Ci</label>
-                            <input type="text" formControlName="NitCi" nbInput fullWidth placeholder="Nit/Ci">                            
+                            <input fieldSize="small" type="text" formControlName="NitCi" nbInput fullWidth placeholder="Nit/Ci">                            
                             <ngx-frm-validacion mensaje="El campo Nit/Ci es requerido" campo="NitCi" [form]="frmProveedor"></ngx-frm-validacion>
                         </div>
                     </div>
@@ -57,7 +58,7 @@
                         {{TParTipoDocumento | json}}
                         <div class="form-group">
                             <label class="label">Tipo de documento</label>
-                            <nb-select formControlName="TParTipoDocumentoFk" fullWidth placeholder="Tipo de documento">
+                            <nb-select size="small" formControlName="TParTipoDocumentoFk" fullWidth placeholder="Tipo de documento">
                                 <nb-option *ngFor="let par of tParTipoDocumento" [value]="par.id">{{par.descripcion}}
                                 </nb-option>
                             </nb-select>                           
@@ -69,10 +70,10 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="label">Correo electronico</label>
-                            <input formControlName="CorreoElectronico" type="text" nbInput fullWidth
+                            <input fieldSize="small" formControlName="Email" type="text" nbInput fullWidth
                                 placeholder="Correo electronico">
                             <small
-                                *ngIf="frmProveedor.get('CorreoElectronico').hasError('email') && frmProveedor.get('CorreoElectronico').touched"
+                                *ngIf="frmProveedor.get('Email').hasError('email') && frmProveedor.get('Email').touched"
                                 class="text-danger">
                                 El campo Correo electronico no es válido
                             </small>                            
@@ -81,13 +82,13 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="label">Casilla</label>
-                            <input formControlName="Casilla" type="text" nbInput fullWidth placeholder="Casilla">
+                            <input fieldSize="small" formControlName="Casilla" type="text" nbInput fullWidth placeholder="Casilla">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Tipo de persona</label>
-                            <nb-select formControlName="TParTipoPersonaFk" fullWidth placeholder="Tipo de persona">
+                            <nb-select size="small" formControlName="TParTipoPersonaFk" fullWidth placeholder="Tipo de persona">
                                 <nb-option *ngFor="let par of tParTipoPersona" [value]="par.id">{{par.descripcion}}
                                 </nb-option>
                             </nb-select>                           
@@ -99,7 +100,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Dirección</label>
-                            <input formControlName="Direccion" type="text" nbInput fullWidth placeholder="Dirección">                            
+                            <input fieldSize="small" formControlName="Direccion" type="text" nbInput fullWidth placeholder="Dirección">                            
                             <ngx-frm-validacion mensaje="El campo Dirección es requerido" campo="Direccion" [form]="frmProveedor"></ngx-frm-validacion>
                             <small 
                                 *ngIf="frmProveedor.get('Direccion').hasError('minlength')" 
@@ -116,14 +117,14 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="label">Teléfono 1</label>
-                            <input formControlName="Telefono1" type="text" nbInput fullWidth placeholder="Teléfono 1">                            
+                            <input fieldSize="small" formControlName="Telefono1" type="text" nbInput fullWidth placeholder="Teléfono 1">                            
                             <ngx-frm-validacion mensaje="El campo Teléfono 1 es requerido" campo="Telefono1" [form]="frmProveedor"></ngx-frm-validacion>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="label">Teléfono 2</label>
-                            <input formControlName="Telefono2" type="text" nbInput fullWidth placeholder="Teléfono 2">
+                            <input fieldSize="small" formControlName="Telefono2" type="text" nbInput fullWidth placeholder="Teléfono 2">
                         </div>
                     </div>
                 </div>
@@ -131,7 +132,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Lugar</label>
-                            <input formControlName="Lugar" type="text" nbInput fullWidth placeholder="Lugar">                           
+                            <input fieldSize="small" formControlName="Lugar" type="text" nbInput fullWidth placeholder="Lugar">                           
                             <ngx-frm-validacion mensaje="El campo Lugar es requerido" campo="Lugar" [form]="frmProveedor"></ngx-frm-validacion>
                         </div>
                     </div>
@@ -140,7 +141,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Tipo de servicio</label>
-                            <nb-select formControlName="TParTipoServicioFk" fullWidth placeholder="Tipo de servicio">
+                            <nb-select size="small" formControlName="TParTipoServicioFk" fullWidth placeholder="Tipo de servicio">
                                 <nb-option *ngFor="let par of tParTipoServicio" [value]="par.id">{{par.descripcion}}
                                 </nb-option>
                             </nb-select>                           
@@ -150,15 +151,12 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="label">Relación</label>
-                            <input formControlName="Relacion" type="text" nbInput fullWidth placeholder="Relación">                            
+                            <input fieldSize="small" formControlName="Relacion" type="text" nbInput fullWidth placeholder="Relación">                            
                             <ngx-frm-validacion mensaje="El campo Relación es requerido" campo="Relacion" [form]="frmProveedor"></ngx-frm-validacion>
                         </div>
                     </div>
                 </div>
-                {{ frmProveedor.valid }}
-                <br>
-                {{frmProveedor.status}}
-
+              
             
             </nb-card-body>
             <nb-card-footer>

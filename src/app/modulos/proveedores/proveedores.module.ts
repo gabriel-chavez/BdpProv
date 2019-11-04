@@ -6,6 +6,7 @@ import { NebularModule } from '../../nebular.module';
 import { GestionComponent } from './gestion/gestion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VariosModule } from '../varios/varios.module';
+import { GenericoModule } from '../generico/generico.module';
 
 
 
@@ -18,7 +19,8 @@ import { VariosModule } from '../varios/varios.module';
     NebularModule,
     FormsModule,
     ReactiveFormsModule,
-    VariosModule
+    VariosModule,
+    GenericoModule
   ],
   declarations: [ProveedoresComponent, GestionComponent, ListaComponent]
 })

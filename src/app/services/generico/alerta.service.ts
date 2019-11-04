@@ -40,7 +40,7 @@ export class AlertaService {
         this.toastrService.show(
             mensaje,
             'Correcto',
-            { status: 'success' });
+            { status: 'success',duration:10000 });
 
     }
     exito(mensaje: string) {

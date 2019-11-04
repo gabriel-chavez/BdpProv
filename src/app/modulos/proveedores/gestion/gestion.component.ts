@@ -3,7 +3,7 @@ import { Parametrica } from '../../../models/generico/parametrica';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ParametricasService } from '../../../services/generico/parametricas.service';
 import { SmartTableData } from '../../../@core/data/smart-table';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbDialogRef } from '@nebular/theme';
 
 import { ViewChild } from '@angular/core';
 
@@ -12,6 +12,8 @@ import { AlertaService } from '../../../services/generico/alerta.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericoService } from '../../../services/generico/generico.service';
 import { GestionService } from '../../../services/gestion/gestion.service';
+import { Proveedor } from '../../../models/proveedor';
+import { Respuesta } from '../../../models/generico/respuesta';
 
 @Component({
   selector: 'ngx-gestion',
@@ -27,81 +29,54 @@ export class GestionComponent {
   tParTipoServicio: Parametrica[] = [];
   tParTipoPersona: Parametrica[] = [];
   tituloModal: string;
-  
+  proveedores:Proveedor[]=[];
   /****/
-  settings = {
-    mode: 'external',
-    actions: {
-      add: false,
-      position: "right",
-      columnTitle: "Acciones",
-      custom: [
-        {
-          name: 'Button',
-          title: '<i class="nb-edit"></i> ',
-        }
-      ],
+  columnas= {
+    nombre: {
+      title: 'Nombre'
     },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+    razonSocial: {
+      title: 'Razon Social'
     },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+    nitCi: {
+      title: 'Nit/Ci'
     },
-    columns: {
-      nombre: {
-        title: 'Nombre',
-        type: 'string',
-      },
-      razonSocial: {
-        title: 'Razon Social',
-        type: 'string',
-      },
-      nitCi: {
-        title: 'Nit/Ci',
-        type: 'number',
-      },
-      tParTipoDocumentoFk: {
-        title: 'Tipo Documento',
-        type: 'string',
-        filter:false
-      },
-      correoElectronico: {
-        title: 'Correo Electronico',
-        type: 'string',
-        filter:false
-      },
-   
-      telefono1: {
-        title: 'Telefono',
-        type: 'number',
-        filter:false
-      },
-     
+    tparTipoDocumentoDescripcion: {
+      title: 'Tipo Documento',
+      filter: false
     },
+    email: {
+      title: 'Correo Electronico',
+      filter: false
+    },
+
+    telefono1: {
+      title: 'Telefono',
+      filter: false
+    },
+
   };
+  
   source: LocalDataSource = new LocalDataSource();
   /****/
-  frmProveedor:FormGroup;
- 
+  frmProveedor: FormGroup;
+
+  private dialogRef: NbDialogRef<any>;
+
   constructor(
     private _parametricasService: ParametricasService,
     private service: SmartTableData,
     private dialogService: NbDialogService,
     private alerta: AlertaService,
     private formBuilder: FormBuilder,
-    private generico:GenericoService,
-    private gestionService:GestionService) {
+    private generico: GenericoService,
+    private gestionService: GestionService
+  ) {
 
-    this.obtenerParametricas();
-    const data = this.service.getData();
-    this.source.load(data);
-
+    this.obtenerParametricas();   
+    this.listarProveedores();
     this.crearFormulario();
-    
+
 
   }
   onDeleteConfirm(event): void {
@@ -112,29 +87,36 @@ export class GestionComponent {
     })
 
   }
-  private crearFormulario(){
-    this.frmProveedor=this.formBuilder.group({
-      Nombre:['',Validators.required],
-      RazonSocial:['',Validators.required],
-      NitCi:['',Validators.required],
-      TParTipoDocumentoFk:['',Validators.required],
-      CorreoElectronico:['',Validators.email],
-      Casilla:[''],
-      TParTipoPersonaFk:['',Validators.required],
-      Direccion:['',[Validators.required, Validators.minLength(5)]],
-      Telefono1:['',Validators.required],
-      Telefono2:[''],
-      Lugar:['',Validators.required],
-      TParTipoServicioFk:['',Validators.required],      
-      Relacion:['',Validators.required],
+  private crearFormulario() {
+    this.frmProveedor = this.formBuilder.group({
+      Nombre: ['', Validators.required],
+      RazonSocial: ['', Validators.required],
+      NitCi: ['', Validators.required],
+      TParTipoDocumentoFk: ['', Validators.required],
+      Email: ['', Validators.email],
+      Casilla: [null],
+      TParTipoPersonaFk: ['', Validators.required],
+      Direccion: ['', [Validators.required, Validators.minLength(5)]],
+      Telefono1: ['', Validators.required],
+      Telefono2: [''],
+      Lugar: ['', Validators.required],
+      TParTipoServicioFk: ['', Validators.required],
+      Relacion: ['', Validators.required],
     })
   }
-
+  private listarProveedores(){
+    this.gestionService.listarProveedores()
+    .subscribe((data: Respuesta) => {
+      console.log(data)
+      this.proveedores = JSON.parse(data.respuestaJson);
+      this.source.load(this.proveedores);
+    });
+  }
   private obtenerParametricas() {
     //Tipo Documento
     this._parametricasService.obtenerParTipoDocumento()
-      .subscribe((data: Array<Parametrica>) => {        
-        this.tParTipoDocumento = data;        
+      .subscribe((data: Array<Parametrica>) => {
+        this.tParTipoDocumento = data;
       });
     //Tipo Persona
     this._parametricasService.obtenerParTipoPersona()
@@ -149,7 +131,7 @@ export class GestionComponent {
   }
   abrirModal(dialog: TemplateRef<any>, tituloModal: string) {
     this.tituloModal = tituloModal;
-    this.dialogService.open(
+    this.dialogRef = this.dialogService.open(
       dialog,
       { closeOnEsc: true, closeOnBackdropClick: false, hasScroll: false });
   }
@@ -159,13 +141,27 @@ export class GestionComponent {
   }
   guardarCambiosProveedor() {
     this.generico.frmValidarTodo(this.frmProveedor);
-    console.log(this.frmProveedor.value);
-    this.gestionService.guardarProveedor(this.frmProveedor.value);
+    if (this.frmProveedor.invalid)
+      return false;
+    this.alerta.confirmar("Esta seguro de guardar el proveedor?", () => {
+      let proveedor = new Proveedor(this.frmProveedor.value)
+      proveedor.Casilla = this.frmProveedor.controls.Casilla.value == "" ? null : Number(this.frmProveedor.controls.Casilla.value);
+      this.gestionService.guardarProveedor(proveedor).subscribe((resp: Respuesta) => {
+        console.log(resp)
+        if (resp.exito) {
+          this.frmProveedor.reset();
+          this.dialogRef.close();
+          this.listarProveedores();
+        }
+
+      });
+    })
+
   }
-  cerrarModal(dialog: any){
+  cerrarModal(dialog: any) {
     console.log("cerrar Modal")
     this.frmProveedor.reset();
     dialog.close();
-    
+
   }
 }
